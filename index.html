@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sơ Đồ Chỗ Ngồi</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.classroom{
+    width:1280px;
+    height:720px;
+    background:#fff;
+    border-radius:24px;
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
+    padding:25px 35px;
+    display:flex;
+    flex-direction:column;
+}
+
+.class-title{
+    text-align:center;
+    font-size:32px;
+    font-weight:700;
+    color:#1e293b;
+    margin-bottom:20px;
+    letter-spacing:1px;
+}
+
+.top-area{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:30px;
+}
+
+.door{
+    width:150px;
+    height:70px;
+    border:3px dashed #94a3b8;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+    color:#475569;
+    background:#f8fafc;
+}
+
+.podium{
+    width:500px;
+    height:85px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:white;
+    font-size:32px;
+    font-weight:700;
+
+    border-radius:18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:
+        0 8px 24px rgba(37,99,235,.3);
+
+    letter-spacing:2px;
+}
+
+.teacher-desk{
+    width:220px;
+    height:75px;
+
+    background:linear-gradient(
+        135deg,
+        #f59e0b,
+        #d97706
+    );
+
+    color:white;
+    font-weight:700;
+    font-size:18px;
+
+    border-radius:14px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:
+        0 6px 16px rgba(245,158,11,.3);
+}
+
+.seating-area{
+    flex:1;
+    display:flex;
+}
+
+.blocks{
+    flex:1;
+    display:flex;
+    justify-content:space-between;
+}
+
+.block{
+    width:46%;
+    display:flex;
+    justify-content:space-between;
+}
+
+.column{
+    width:23%;
+    display:flex;
+    flex-direction:column;
+}
+
+.col-header{
+    text-align:center;
+    background:#e2e8f0;
+    color:#334155;
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:18px;
+    font-size:16px;
+    font-weight:700;
+}
+
+.aisle{
+    width:90px;
+    position:relative;
+}
+
+.aisle::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:20px;
+    bottom:20px;
+    border-left:4px dashed #cbd5e1;
+}
+
+.desk{
+    height:60px;
+    min-height:60px;
+
+    margin-bottom:18px;
+
+    background:linear-gradient(
+        135deg,
+        #ffffff,
+        #f8fafc
+    );
+
+    border:1px solid #dbe4ea;
+    border-radius:12px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+    padding:6px;
+
+    font-size:14px;
+    font-weight:500;
+
+    color:#1e293b;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,.06);
+
+    transition:.2s;
+}
+
+.desk:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 6px 16px rgba(0,0,0,.12);
+}
+
+.desk:last-child{
+    margin-bottom:0;
+}
+
+.desk:empty{
+    background:#f1f5f9;
+    border-style:dashed;
+    opacity:.45;
+}
+</style>
+
+</head>
+<body>
+
+<div class="classroom">
+
+    <div class="class-title">
+        SƠ ĐỒ CHỖ NGỒI LỚP
+    </div>
+
+    <div class="top-area">
+        <div class="door">CỬA LỚP</div>
+
+        <div class="podium">
+            BỤC GIẢNG
+        </div>
+
+        <div class="teacher-desk">
+            BÀN GIÁO VIÊN
+        </div>
+    </div>
+
+    <div class="seating-area">
+
+        <div class="blocks">
+
+            <!-- Khối trái -->
+            <div class="block">
+
+                <div class="column">
+                    <div class="col-header">DÃY 1</div>
+                    <div class="desk"></div>
+                    <div class="desk">Trung Hậu</div>
+                    <div class="desk">Chi</div>
+                    <div class="desk">Ngọc Châm</div>
+                    <div class="desk">Huy</div>
+                    <div class="desk">Vân Hồng</div>
+                </div>
+
+                <div class="column">
+                    <div class="col-header">DÃY 2</div>
+                    <div class="desk"></div>
+                    <div class="desk">Khánh Linh</div>
+                    <div class="desk">Minh Trang</div>
+                    <div class="desk">Nguyễn T.Nhung</div>
+                    <div class="desk">Mạnh</div>
+                    <div class="desk">Loan</div>
+                </div>
+
+                <div class="column">
+                    <div class="col-header">DÃY 3</div>
+                    <div class="desk">Tuyết Anh</div>
+                    <div class="desk">Mai Anh</div>
+                    <div class="desk">Hồng Nhung</div>
+                    <div class="desk">Khương Nhung</div>
+                    <div class="desk">Thùy Dương</div>
+                    <div class="desk">Minh Anh</div>
+                </div>
+
+                <div class="column">
+                    <div class="col-header">DÃY 4</div>
+                    <div class="desk">Thuỷ</div>
+                    <div class="desk">Quý Ngọc</div>
+                    <div class="desk">Nhi</div>
+                    <div class="desk">Hà Phương</div>
+                    <div class="desk">Thanh Hà</div>
+                    <div class="desk"></div>
+                </div>
+
+            </div>
+
+            <!-- Lối đi -->
+            <div class="aisle"></div>
+
+            <!-- Khối phải -->
+            <div class="block">
+
+                <div class="column">
+                    <div class="col-header">DÃY 5</div>
+                    <div class="desk"></div>
+                    <div class="desk">Thùy Vân</div>
+                    <div class="desk">Nhật Anh</div>
+                    <div class="desk">Thu Trang</div>
+                    <div class="desk">Hà Giang</div>
+                    <div class="desk"></div>
+                </div>
+
+                <div class="column">
+                    <div class="col-header">DÃY 6</div>
+                    <div class="desk">Việt Anh</div>
+                    <div class="desk">Thanh Thảo</div>
+                    <div class="desk">Ánh Nguyệt</div>
+                    <div class="desk">Nhật Minh</div>
+                    <div class="desk">Trà My</div>
+                    <div class="desk"></div>
+                </div>
+
+                <div class="column">
+                    <div class="col-header">DÃY 7</div>
+                    <div class="desk">Bảo Hà</div>
+                    <div class="desk">Thúy Anh</div>
+                    <div class="desk">Đào Ngà</div>
+                    <div class="desk">Thu Trà</div>
+                    <div class="desk">Thanh Tâm</div>
+                    <div class="desk"></div>
+                </div>
+
+                <div class="column">
+                    <div class="col-header">DÃY 8</div>
+                    <div class="desk"></div>
+                    <div class="desk">Uyên</div>
+                    <div class="desk">Yến Linh</div>
+                    <div class="desk"></div>
+                    <div class="desk">Nguyên Hoàng</div>
+                    <div class="desk"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
