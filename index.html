@@ -3,9 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sơ Đồ Chỗ Ngồi Lớp Học</title>
+<title>Sơ Đồ Chỗ Ngồi & Vòng Quay May Mắn</title>
 
 <style>
+/* ==========================================================================
+   1. CSS RESET & VARIABLES
+   ========================================================================== */
 *{
     margin:0;
     padding:0;
@@ -16,26 +19,95 @@
     --bg:#f1f5f9;
     --card:#ffffff;
     --primary:#2563eb;
+    --primary-hover:#1d4ed8;
     --secondary:#f59e0b;
     --text:#1e293b;
+    --text-light:#64748b;
     --border:#dbe4ea;
+    --shadow-sm: 0 2px 6px rgba(0,0,0,.06);
+    --shadow-md: 0 8px 18px rgba(0,0,0,.12);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,.08);
+    --radius-md: 14px;
+    --radius-lg: 24px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body{
-    font-family:'Segoe UI',sans-serif;
+    font-family:'Segoe UI', sans-serif;
     background:linear-gradient(135deg,#eef2ff,#f8fafc);
     min-height:100vh;
     padding:20px;
+    color: var(--text);
 }
 
-.classroom{
+.app-container {
     width:100%;
     max-width:1400px;
     margin:auto;
+}
+
+/* ==========================================================================
+   2. TAB NAVIGATION SYSTEM (NEW)
+   ========================================================================== */
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.tab-btn {
+    background: var(--card);
+    border: 2px solid transparent;
+    color: var(--text-light);
+    padding: 12px 26px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.tab-btn.active {
+    background: #eff6ff;
+    color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   3. SƠ ĐỒ LỚP (GIỮ NGUYÊN HOÀN TOÀN GIAO DIỆN HIỆN TẠI)
+   ========================================================================== */
+.classroom{
+    width:100%;
     background:var(--card);
-    border-radius:24px;
+    border-radius:var(--radius-lg);
     padding:30px;
-    box-shadow:0 20px 40px rgba(0,0,0,.08);
+    box-shadow:var(--shadow-lg);
 }
 
 .class-title{
@@ -160,13 +232,13 @@ body{
     font-size:14px;
     font-weight:500;
 
-    box-shadow:0 2px 6px rgba(0,0,0,.06);
+    box-shadow:var(--shadow-sm);
     transition:.2s;
 }
 
 .desk:hover{
     transform:translateY(-2px);
-    box-shadow:0 8px 18px rgba(0,0,0,.12);
+    box-shadow:var(--shadow-md);
 }
 
 .desk:empty{
@@ -179,11 +251,214 @@ body{
     margin-bottom:0;
 }
 
-/* Mobile */
-@media(max-width:768px){
+/* ==========================================================================
+   4. VÒNG QUAY MAY MẮN (NEW INTERFACE)
+   ========================================================================== */
+.lucky-wheel-section {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: var(--shadow-lg);
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+}
 
+.wheel-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 25px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.winner-card {
+    background: #f8fafc;
+    border: 3px dashed var(--border);
+    border-radius: var(--radius-lg);
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    transition: var(--transition);
+    padding: 20px;
+}
+
+.winner-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+/* States cho màn hình người trúng thưởng */
+.winner-card.spinning {
+    border-color: var(--primary);
+    border-style: solid;
+    background: #f0f7ff;
+    box-shadow: 0 0 25px rgba(37, 99, 235, 0.15);
+}
+.winner-card.spinning .winner-name {
+    color: var(--primary);
+    font-size: 36px;
+}
+
+.winner-card.has-winner {
+    background: linear-gradient(135deg, var(--primary), #1d4ed8);
+    border: none;
+    box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+    animation: bounceIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.winner-card.has-winner .winner-name {
+    color: #ffffff;
+    font-size: 46px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.winner-card.empty-pool {
+    background: #fef2f2;
+    border: 3px solid #fecaca;
+}
+.winner-card.empty-pool .winner-name {
+    color: #ef4444;
+    font-size: 26px;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.6); opacity: 0; }
+    60% { transform: scale(1.04); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.wheel-controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 35px;
+}
+
+.control-btn {
+    border: none;
+    padding: 16px 42px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-spin-action {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25);
+}
+.btn-spin-action:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+}
+
+.btn-reset-action {
+    background: linear-gradient(135deg, #64748b, #475569);
+    box-shadow: 0 6px 20px rgba(100, 116, 139, 0.25);
+}
+.btn-reset-action:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(100, 116, 139, 0.35);
+}
+
+.pool-container {
+    text-align: left;
+    border-top: 1px solid var(--border);
+    padding-top: 25px;
+}
+
+.pool-header {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.counter-badge {
+    background: #e2e8f0;
+    color: var(--text);
+    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.chips-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.chips-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+.chips-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.student-chip {
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    transition: var(--transition);
+}
+
+.student-chip.removed {
+    opacity: 0;
+    transform: scale(0.7);
+    width: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media(max-width:768px){
     body{
         padding:10px;
+    }
+
+    .tab-navigation {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        justify-content: center;
     }
 
     .classroom{
@@ -208,7 +483,7 @@ body{
 
     .podium{
         font-size:24px;
-        height:70px;
+        min-height:70px;
     }
 
     .door,
@@ -226,121 +501,337 @@ body{
         min-height:52px;
         font-size:12px;
     }
+
+    /* Lucky Wheel Mobile */
+    .lucky-wheel-section {
+        padding: 20px;
+    }
+    
+    .wheel-title {
+        font-size: 24px;
+    }
+
+    .winner-card {
+        height: 140px;
+    }
+
+    .winner-card.has-winner .winner-name {
+        font-size: 32px;
+    }
+    
+    .winner-card.spinning .winner-name {
+        font-size: 26px;
+    }
+
+    .wheel-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .control-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="classroom">
+<div class="app-container">
 
-    <div class="class-title">
-        SƠ ĐỒ CHỖ NGỒI LỚP 12A1
+    <!-- TAB NAVIGATION SYSTEM -->
+    <div class="tab-navigation">
+        <button class="tab-btn active" data-tab="tab-seating">🪑 Sơ đồ lớp</button>
+        <button class="tab-btn" data-tab="tab-wheel">🎉 Vòng quay may mắn</button>
     </div>
 
-    <div class="top-area">
-        <div class="door">CỬA LỚP</div>
+    <!-- TAB CONTENT: SƠ ĐỒ LỚP -->
+    <div id="tab-seating" class="tab-content active">
+        <div class="classroom">
+            <div class="class-title">
+                SƠ ĐỒ CHỖ NGỒI LỚP 1TCT-26-1
+            </div>
 
-        <div class="podium">
-            BỤC GIẢNG
-        </div>
+            <div class="top-area">
+                <div class="door">CỬA LỚP</div>
+                <div class="podium">BỤC GIẢNG</div>
+                <div class="teacher-desk">BÀN GIÁO VIÊN</div>
+            </div>
 
-        <div class="teacher-desk">
-            BÀN GIÁO VIÊN
+            <div class="seating-area">
+                <div class="blocks">
+                    <div class="block">
+                        <div class="column">
+                            <div class="desk"></div>
+                            <div class="desk">Trung Hậu</div>
+                            <div class="desk">Chi</div>
+                            <div class="desk">Ngọc Châm</div>
+                            <div class="desk">Huy</div>
+                            <div class="desk">Vân Hồng</div>
+                        </div>
+
+                        <div class="column">
+                            <div class="desk"></div>
+                            <div class="desk">Khánh Linh</div>
+                            <div class="desk">Minh Trang</div>
+                            <div class="desk">Nguyễn T.Nhung</div>
+                            <div class="desk">Mạnh</div>
+                            <div class="desk">Loan</div>
+                        </div>
+
+                        <div class="column">
+                            <div class="desk">Tuyết Anh</div>
+                            <div class="desk">Mai Anh</div>
+                            <div class="desk">Hồng Nhung</div>
+                            <div class="desk">Khương Nhung</div>
+                            <div class="desk">Thùy Dương</div>
+                            <div class="desk">Minh Anh</div>
+                        </div>
+
+                        <div class="column">
+                            <div class="desk">Thủy</div>
+                            <div class="desk">Quý Ngọc</div>
+                            <div class="desk">Nhi</div>
+                            <div class="desk">Hà Phương</div>
+                            <div class="desk">Thanh Hà</div>
+                            <div class="desk"></div>
+                        </div>
+                    </div>
+
+                    <div class="aisle"></div>
+
+                    <div class="block">
+                        <div class="column">
+                            <div class="desk"></div>
+                            <div class="desk">Thùy Vân</div>
+                            <div class="desk">Nhật Anh</div>
+                            <div class="desk">Thu Trang</div>
+                            <div class="desk">Hà Giang</div>
+                            <div class="desk"></div>
+                        </div>
+
+                        <div class="column">
+                            <div class="desk">Việt Anh</div>
+                            <div class="desk">Thanh Thảo</div>
+                            <div class="desk">Ánh Nguyệt</div>
+                            <div class="desk">Nhật Minh</div>
+                            <div class="desk">Trà My</div>
+                            <div class="desk"></div>
+                        </div>
+
+                        <div class="column">
+                            <div class="desk">Bảo Hà</div>
+                            <div class="desk">Thúy Anh</div>
+                            <div class="desk">Đào Ngà</div>
+                            <div class="desk">Thu Trà</div>
+                            <div class="desk">Thanh Tâm</div>
+                            <div class="desk"></div>
+                        </div>
+
+                        <div class="column">
+                            <div class="desk"></div>
+                            <div class="desk">Uyên</div>
+                            <div class="desk">Yến Linh</div>
+                            <div class="desk"></div>
+                            <div class="desk">Nguyên Hoàng</div>
+                            <div class="desk"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="seating-area">
-
-        <div class="blocks">
-
-            <div class="block">
-
-                <div class="column">
-                    <div class="desk"></div>
-                    <div class="desk">Trung Hậu</div>
-                    <div class="desk">Chi</div>
-                    <div class="desk">Ngọc Châm</div>
-                    <div class="desk">Huy</div>
-                    <div class="desk">Vân Hồng</div>
-                </div>
-
-                <div class="column">
-                    <div class="desk"></div>
-                    <div class="desk">Khánh Linh</div>
-                    <div class="desk">Minh Trang</div>
-                    <div class="desk">Nguyễn T.Nhung</div>
-                    <div class="desk">Mạnh</div>
-                    <div class="desk">Loan</div>
-                </div>
-
-                <div class="column">
-                    <div class="desk">Tuyết Anh</div>
-                    <div class="desk">Mai Anh</div>
-                    <div class="desk">Hồng Nhung</div>
-                    <div class="desk">Khương Nhung</div>
-                    <div class="desk">Thùy Dương</div>
-                    <div class="desk">Minh Anh</div>
-                </div>
-
-                <div class="column">
-                    <div class="desk">Thủy</div>
-                    <div class="desk">Quý Ngọc</div>
-                    <div class="desk">Nhi</div>
-                    <div class="desk">Hà Phương</div>
-                    <div class="desk">Thanh Hà</div>
-                    <div class="desk"></div>
-                </div>
-
+    <!-- TAB CONTENT: VÒNG QUAY MAY MẮN -->
+    <div id="tab-wheel" class="tab-content">
+        <div class="lucky-wheel-section">
+            <h2 class="wheel-title">🎉 Vòng Quay May Mắn</h2>
+            
+            <div id="winner-box" class="winner-card">
+                <span id="winner-text" class="winner-name">Sẵn sàng! Nhấn QUAY để chọn ngẫu nhiên</span>
             </div>
 
-            <div class="aisle"></div>
-
-            <div class="block">
-
-                <div class="column">
-                    <div class="desk"></div>
-                    <div class="desk">Thùy Vân</div>
-                    <div class="desk">Nhật Anh</div>
-                    <div class="desk">Thu Trang</div>
-                    <div class="desk">Hà Giang</div>
-                    <div class="desk"></div>
-                </div>
-
-                <div class="column">
-                    <div class="desk">Việt Anh</div>
-                    <div class="desk">Thanh Thảo</div>
-                    <div class="desk">Ánh Nguyệt</div>
-                    <div class="desk">Nhật Minh</div>
-                    <div class="desk">Trà My</div>
-                    <div class="desk"></div>
-                </div>
-
-                <div class="column">
-                    <div class="desk">Bảo Hà</div>
-                    <div class="desk">Thúy Anh</div>
-                    <div class="desk">Đào Ngà</div>
-                    <div class="desk">Thu Trà</div>
-                    <div class="desk">Thanh Tâm</div>
-                    <div class="desk"></div>
-                </div>
-
-                <div class="column">
-                    <div class="desk"></div>
-                    <div class="desk">Uyên</div>
-                    <div class="desk">Yến Linh</div>
-                    <div class="desk"></div>
-                    <div class="desk">Nguyên Hoàng</div>
-                    <div class="desk"></div>
-                </div>
-
+            <div class="wheel-controls">
+                <button id="spin-btn" class="control-btn btn-spin-action">🎯 QUAY</button>
+                <button id="reset-btn" class="control-btn btn-reset-action">🔄 RESET</button>
             </div>
 
+            <div class="pool-container">
+                <div class="pool-header">
+                    <span>Danh sách học sinh còn lại</span>
+                    <span id="pool-counter" class="counter-badge">0/0</span>
+                </div>
+                <div id="chips-container" class="chips-wrapper">
+                    <!-- Học sinh chips tự động tạo bằng JS -->
+                </div>
+            </div>
         </div>
-
     </div>
 
 </div>
+
+<!-- ==========================================================================
+   6. JAVASCRIPT ARCHITECTURE (PURE VANILLA)
+   ========================================================================== -->
+<script>
+// Khởi chạy ứng dụng ngay lập tức (không bọc DOMContentLoaded để tránh kẹt trên các môi trường iframe/sandbox)
+(function() {
+    // --- STATE MANAGEMENT (Mô hình Single Source of Truth) ---
+    let originalStudentsList = [];
+    let activeRotationPool = [];
+    let isCurrentlySpinning = false;
+    let rotationEffectTimer = null;
+
+    // --- DOM CACHING ---
+    const tabs = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    const winnerBox = document.getElementById('winner-box');
+    const winnerText = document.getElementById('winner-text');
+    const spinBtn = document.getElementById('spin-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const chipsContainer = document.getElementById('chips-container');
+    const poolCounter = document.getElementById('pool-counter');
+
+    // --- FUNCTIONAL CORE ---
+    
+    // 1. Quét DOM sơ đồ lớp để lấy học sinh (Tránh khai báo thủ công)
+    const scanClassroomData = () => {
+        const deskElements = document.querySelectorAll('.desk');
+        originalStudentsList = [];
+        
+        deskElements.forEach(desk => {
+            const cleanedName = desk.textContent.trim();
+            if (cleanedName !== '') {
+                originalStudentsList.push(cleanedName);
+            }
+        });
+        
+        // Clone dữ liệu gốc sang mảng hoạt động chống đột biến dữ liệu gốc (Immutability concept)
+        activeRotationPool = [...originalStudentsList];
+    };
+
+    // 2. Render danh sách Tag/Chip học sinh còn lại
+    const updateChipsUI = () => {
+        poolCounter.textContent = `${activeRotationPool.length}/${originalStudentsList.length}`;
+        
+        if (activeRotationPool.length === 0) {
+            chipsContainer.innerHTML = '<span style="color: var(--text-light); font-style: italic; font-size: 14px;">Danh sách trống</span>';
+            return;
+        }
+
+        chipsContainer.innerHTML = activeRotationPool
+            .map(studentName => `<span class="student-chip">${studentName}</span>`)
+            .join('');
+    };
+
+    // 3. Quản lý trạng thái hiển thị của ô kết quả
+    const updateWinnerBoxState = (text, uiState) => {
+        winnerText.innerHTML = text;
+        
+        // Reset classes
+        winnerBox.classList.remove('spinning', 'has-winner', 'empty-pool');
+        
+        // Apply state class
+        if (uiState === 'spinning') winnerBox.classList.add('spinning');
+        if (uiState === 'winner') winnerBox.classList.add('has-winner');
+        if (uiState === 'empty') winnerBox.classList.add('empty-pool');
+    };
+
+    // --- EVENT HANDLERS ---
+
+    // Xử lý chuyển đổi Tab mượt mà
+    const onTabClick = (event) => {
+        if (isCurrentlySpinning) return; // Chặn chuyển đổi khi đang thực hiện animation quay học sinh
+
+        const clickedTab = event.currentTarget;
+        const targetTabId = clickedTab.getAttribute('data-tab');
+
+        tabs.forEach(tab => tab.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        clickedTab.classList.add('active');
+        document.getElementById(targetTabId).classList.add('active');
+    };
+
+    // Xử lý logic vòng quay
+    const triggerLuckyWheel = () => {
+        if (isCurrentlySpinning) return;
+
+        // Trường hợp đặc biệt: Hết học sinh trong danh sách quay
+        if (activeRotationPool.length === 0) {
+            updateWinnerBoxState('🎉<br>Đã chọn hết học sinh', 'empty');
+            spinBtn.disabled = true;
+            return;
+        }
+
+        // Lock trạng thái nút và tab
+        isCurrentlySpinning = true;
+        spinBtn.disabled = true;
+        resetBtn.disabled = true;
+
+        const duration = 2400; // Thời gian quay tổng cộng 2.4s
+        const intervalSpeed = 70; // 70ms cập nhật tên ngẫu nhiên một lần nhằm tạo cảm giác vòng quay siêu tốc
+
+        rotationEffectTimer = setInterval(() => {
+            const trackingRandomIndex = Math.floor(Math.random() * activeRotationPool.length);
+            updateWinnerBoxState(activeRotationPool[trackingRandomIndex], 'spinning');
+        }, intervalSpeed);
+
+        // Kết thúc vòng quay sau thời gian chỉ định
+        setTimeout(() => {
+            clearInterval(rotationEffectTimer);
+
+            const finalLuckyIndex = Math.floor(Math.random() * activeRotationPool.length);
+            const luckyWinner = activeRotationPool[finalLuckyIndex];
+
+            // Loại bỏ học sinh trúng thưởng ra khỏi mảng
+            activeRotationPool.splice(finalLuckyIndex, 1);
+
+            // Cập nhật UI hiển thị người thắng cuộc và render lại tag/chip học sinh còn lại
+            updateWinnerBoxState(luckyWinner, 'winner');
+            updateChipsUI();
+
+            // Unlock trạng thái ứng dụng
+            isCurrentlySpinning = false;
+            resetBtn.disabled = false;
+
+            if (activeRotationPool.length > 0) {
+                spinBtn.disabled = false;
+            } else {
+                // Đã chọn người cuối cùng thành công, sau 3s chuyển sang chế độ kết thúc
+                setTimeout(() => {
+                    if (activeRotationPool.length === 0) {
+                        updateWinnerBoxState('🎉<br>Đã chọn hết học sinh', 'empty');
+                        spinBtn.disabled = true;
+                    }
+                }, 3500);
+            }
+        }, duration);
+    };
+
+    // Khôi phục trạng thái danh sách ban đầu
+    const resetLuckyWheel = () => {
+        if (isCurrentlySpinning) return;
+
+        activeRotationPool = [...originalStudentsList];
+        updateWinnerBoxState('Sẵn sàng! Nhấn QUAY để chọn ngẫu nhiên', 'default');
+        spinBtn.disabled = false;
+        updateChipsUI();
+    };
+
+    // --- BINDING EVENTS ---
+    tabs.forEach(tab => tab.addEventListener('click', onTabClick));
+    spinBtn.addEventListener('click', triggerLuckyWheel);
+    resetBtn.addEventListener('click', resetLuckyWheel);
+
+    // --- INITIALIZATION WORKFLOW ---
+    scanClassroomData();
+    updateChipsUI();
+})();
+</script>
 
 </body>
 </html>
